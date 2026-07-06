@@ -1,8 +1,8 @@
 # GovAgent-IQ
 
-An agentic GDPR (General Data Protection Regulation) compliance reviewer. Upload a company privacy or data-protection policy
+An agentic GDPR (General Data Protection Regulation) compliance reviewer. Upload a company privacy or data-protection policy document
 and get back a graded compliance report. Findings are tied to specific GDPR articles, each
-with a risk level, a justification and even the evidence it was based on.
+with a risk level, justification and even the evidence it was based on.
 
 It is built for the Agents for Business track of the 5-Day AI Agents Intensive (Google | Kaggle) course using Google's Agent Development Kit (ADK) 2.0 and Gemini 2.5 Flash.
 
