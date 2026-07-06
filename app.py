@@ -1,12 +1,12 @@
 """GovAgent-IQ — Streamlit UI.
 
 A THIN layer over the three-agent pipeline (see SPEC.md section 8). It collects a document,
-runs the existing ingestion → auditor → risk-assessor graph, and renders the resulting
-ComplianceReport as a risk gauge, summary metrics, a severity chart, and per-finding cards.
+runs the existing ingestion → auditor → risk-assessor graph and renders the resulting
+ComplianceReport as a risk gauge, summary metrics, severity chart and per-finding cards.
 No agent logic lives here.
 """
 
-# --- TLS + env setup: must run before any Gemini call ----------------------------
+# TLS + env setup: must run before any Gemini call
 import truststore
 
 truststore.inject_into_ssl()  # trust the OS cert store (fixes AVG/proxy TLS interception)
@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # GOOGLE_API_KEY stays in the environment, never hardcoded
 
-# --- Regular imports -------------------------------------------------------------
+# Regular imports
 import asyncio
 import json
 from collections import Counter
@@ -35,7 +35,7 @@ from govagent.pipeline import APP_NAME, build_pipeline, run_audit
 
 SAMPLE_DIR = Path("data/mock_contracts")
 
-# --- Page config -----------------------------------------------------------------
+# Page config
 st.set_page_config(page_title="GovAgent-IQ", page_icon="🛡️", layout="wide")
 
 
@@ -58,10 +58,10 @@ def get_runner():
 
 runner, session_service = get_runner()
 
-st.title("🛡️ GovAgent-IQ")
+st.title("GovAgent-IQ 🛡️")
 st.caption("Enterprise GDPR Compliance & Risk-Mitigation Engine")
 
-# --- Color maps for badges -------------------------------------------------------
+# Color maps for badges
 STATUS_COLORS = {"violation": "#d64545", "needs_review": "#d9a441", "compliant": "#3f9142"}
 VERDICT_COLORS = {
     "upheld": "#3f9142",
@@ -80,7 +80,7 @@ def badge(text: str, color: str) -> str:
     )
 
 
-# --- Input area (sidebar) --------------------------------------------------------
+# Input area (sidebar)
 with st.sidebar:
     st.header("Document")
     source = st.radio(
@@ -117,7 +117,7 @@ with st.sidebar:
         with st.expander("Preview source text"):
             st.text(doc_text[:2000] + ("…" if len(doc_text) > 2000 else ""))
 
-# --- Run the pipeline ------------------------------------------------------------
+# Run the pipeline
 if run_clicked:
     if not doc_text.strip():
         st.error("Please provide a document (sample, upload, or pasted text) first.")
@@ -133,7 +133,7 @@ if run_clicked:
                 st.session_state.pop("report", None)
                 st.error(f"Audit failed: {exc}")
 
-# --- Render the report -----------------------------------------------------------
+# Render the report
 report = st.session_state.get("report")
 
 if not report:
@@ -142,7 +142,7 @@ else:
     findings = report["findings"]
     score = float(report["overall_risk_score"])
 
-    # Risk gauge -----------------------------------------------------------------
+    # Risk gauge
     if score >= 0.7:
         risk_color, risk_label = "#d64545", "High risk"
     elif score >= 0.4:
@@ -166,7 +166,7 @@ else:
         unsafe_allow_html=True,
     )
 
-    # Summary metrics ------------------------------------------------------------
+    # Summary metrics
     n_violations = sum(1 for f in findings if f["status"] == "violation")
     n_needs_review = sum(1 for f in findings if f["status"] == "needs_review")
     c1, c2, c3, c4 = st.columns(4)
@@ -175,7 +175,7 @@ else:
     c3.metric("Violations", n_violations)
     c4.metric("Needs review", n_needs_review)
 
-    # Severity bar chart ---------------------------------------------------------
+    # Severity bar chart 
     sev_counts = Counter(f["severity"] for f in findings)
     sev_df = pd.DataFrame(
         {"severity": SEVERITY_ORDER, "count": [sev_counts.get(s, 0) for s in SEVERITY_ORDER]}
@@ -183,7 +183,7 @@ else:
     st.markdown("**Findings by severity**")
     st.bar_chart(sev_df, height=200)
 
-    # Per-finding cards ----------------------------------------------------------
+    # Per-finding cards
     st.markdown("### Findings")
 
     # Show most severe first.
@@ -207,7 +207,7 @@ else:
             st.markdown(f"**Explanation** — {f['explanation']}")
             st.markdown(f"**Recommendation** — {f['recommendation']}")
 
-    # Download -------------------------------------------------------------------
+    # Download
     st.download_button(
         "⬇️ Download report (JSON)",
         data=json.dumps(report, indent=2),
