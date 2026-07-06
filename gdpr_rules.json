@@ -1,0 +1,62 @@
+{
+  "regulation": "GDPR (Regulation (EU) 2016/679)",
+  "source_note": "Obligations restated as discrete, auditable rules derived from the regulation. Article references point to the official text; the Auditor uses these rules, and check_recent_amendments verifies nothing material has changed.",
+  "rules": [
+    {
+      "obligation": "processor_agreement_clauses",
+      "article": "Art. 28",
+      "topic_tags": ["processor_agreement", "vendor", "data_processing"],
+      "rule": "Any contract with a data processor must bind the processor in writing to: process data only on documented instructions, ensure confidentiality, implement Art. 32 security measures, assist the controller with data-subject rights, and delete or return data at end of service.",
+      "violation_looks_like": "A vendor contract that shares personal data but omits binding processing instructions, sub-processor controls, or deletion obligations.",
+      "severity_hint": "high"
+    },
+    {
+      "obligation": "lawful_basis",
+      "article": "Art. 6",
+      "topic_tags": ["lawful_basis", "consent", "processing"],
+      "rule": "Every processing activity must rest on at least one lawful basis (consent, contract, legal obligation, vital interests, public task, or legitimate interests). The basis should be identifiable.",
+      "violation_looks_like": "A policy describing data collection with no stated lawful basis, or relying on 'consent' that is bundled/non-specific.",
+      "severity_hint": "high"
+    },
+    {
+      "obligation": "international_transfer_safeguards",
+      "article": "Art. 44-46",
+      "topic_tags": ["international_transfer", "third_country", "scc"],
+      "rule": "Personal data transferred outside the EEA requires an adequacy decision or appropriate safeguards (e.g., Standard Contractual Clauses).",
+      "violation_looks_like": "A clause permitting data storage/processing in a third country with no adequacy reference and no SCCs.",
+      "severity_hint": "high"
+    },
+    {
+      "obligation": "data_minimisation",
+      "article": "Art. 5(1)(c)",
+      "topic_tags": ["data_minimisation", "collection", "purpose"],
+      "rule": "Personal data collected must be adequate, relevant, and limited to what is necessary for the stated purpose.",
+      "violation_looks_like": "A policy collecting broad categories of data 'for future use' or beyond the stated purpose.",
+      "severity_hint": "medium"
+    },
+    {
+      "obligation": "storage_limitation",
+      "article": "Art. 5(1)(e)",
+      "topic_tags": ["retention", "storage_limitation"],
+      "rule": "Personal data must not be kept longer than necessary; a defined retention period or criteria must exist.",
+      "violation_looks_like": "A policy or contract with no retention period, or 'retained indefinitely'.",
+      "severity_hint": "medium"
+    },
+    {
+      "obligation": "security_measures",
+      "article": "Art. 32",
+      "topic_tags": ["security", "encryption", "breach"],
+      "rule": "Appropriate technical and organisational measures (e.g., encryption, access control, resilience) must protect personal data.",
+      "violation_looks_like": "No mention of security controls where personal data is handled, or plaintext storage of sensitive data.",
+      "severity_hint": "high"
+    },
+    {
+      "obligation": "breach_notification",
+      "article": "Art. 33",
+      "topic_tags": ["breach", "notification", "72_hours"],
+      "rule": "A processor must notify the controller without undue delay after becoming aware of a personal-data breach; controllers notify the supervisory authority within 72 hours where feasible.",
+      "violation_looks_like": "A vendor contract with no breach-notification obligation or a vague/long notification window.",
+      "severity_hint": "medium"
+    }
+  ]
+}

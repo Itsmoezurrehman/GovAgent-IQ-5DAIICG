@@ -1,0 +1,33 @@
+{
+  "source_note": "MOCK vendor/processor registry — synthetic data for demo purposes only, clearly disclosed (see SPEC.md section 4). query_company_db reads this file.",
+  "companies": [
+    {
+      "name": "CloudVantage Analytics Ltd.",
+      "has_dpa": false,
+      "sub_processors": [
+        "AWS US-East (Virginia)",
+        "SingaporeCloud Pte Ltd"
+      ],
+      "data_location": "United States and Singapore",
+      "retention_policy": "Retained indefinitely for model improvement"
+    },
+    {
+      "name": "EuroSecure Data GmbH",
+      "has_dpa": true,
+      "sub_processors": [
+        "OVHcloud (Frankfurt, DE)"
+      ],
+      "data_location": "European Economic Area (Germany)",
+      "retention_policy": "Deleted 30 days after end of service"
+    },
+    {
+      "name": "Meridian Payments SA",
+      "has_dpa": true,
+      "sub_processors": [
+        "Stripe (SCCs in place)"
+      ],
+      "data_location": "European Economic Area (Ireland)",
+      "retention_policy": "Retained 7 years to meet financial-record obligations, then deleted"
+    }
+  ]
+}
